@@ -1,0 +1,14 @@
+{
+  "name": "screenshooter",
+  "version": "1.0.0",
+  "dependencies": {
+    "webshot": "^0.18.0"
+  },
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node screenshot.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
