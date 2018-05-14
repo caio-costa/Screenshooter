@@ -24,9 +24,7 @@ var options = {
 	quality: imageQuality
 }
 
-fs.mkdirSync(timestamp);
-
-bar = new progress(chalk.cyan('PROGRESS: [ :bar ] - FILES: :current/:total - TIME: :elapseds'), {
+const bar = new progress(chalk.cyan('PROGRESS: [ :bar ] - FILES: :current/:total - TIME: :elapseds'), {
 	complete: '■',
 	incomplete: '□',
 	width: Object.keys(urls).length*2,
@@ -36,12 +34,20 @@ bar = new progress(chalk.cyan('PROGRESS: [ :bar ] - FILES: :current/:total - TIM
 	}
 })
 
-async.forEachOf(urls, (value, key, cb ) => {
-	webshot(value, './' + timestamp + '/' + key + '.jpeg', options, (err) => {
+fs.stat('prints', (error, stat) => {
+	if(error) fs.mkdirSync('prints');
+	fs.mkdir('prints/' + timestamp, () => {
+		async.forEachOf(urls, (value, key, cb ) => {
+			webshot(value, './prints/' + timestamp + '/' + key + '.jpeg', options, (err) => {
+		
+					if(err) console.log(err)
+					cb()
+					bar.tick();
+			});
+		}, err => {
 			if(err) console.log(err)
-			cb()
-			bar.tick();
+		})
 	});
-}, err => {
-	if(err) console.log(err)
 })
+
+
