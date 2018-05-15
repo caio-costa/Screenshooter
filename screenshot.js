@@ -5,7 +5,8 @@ var progress 	= require('progress');
 var urls 		= require('./pages.json');
 var chalk       = require('chalk');
 
-console.log('\n', chalk.green( 'STARTED!' ), '\n')
+console.log('\n', chalk.green('STARTED!'), '\n')
+console.log(chalk.cyan(' Capturing screenshots...'))
 
 var pageWidth = 1366, pageHeight = 768,
 renderTime = 1000, imageQuality = 100;
@@ -24,13 +25,14 @@ var options = {
 	quality: imageQuality
 }
 
-const bar = new progress(chalk.cyan('PROGRESS: [ :bar ] - FILES: :current/:total - TIME: :elapseds'), {
+const bar = new progress(chalk.cyan(' PROGRESS: [ :bar ] - FILES: :current/:total - TIME: :elapseds'), {
 	complete: '■',
 	incomplete: '□',
 	width: Object.keys(urls).length*2,
 	total: Object.keys(urls).length,
 	callback: () => {
-		console.log('\n', chalk.green( 'COMPLETED!' ), '\n')
+		console.log('\n', chalk.green('COMPLETED!'))
+		console.log(chalk.green(" Files saved to \'prints\/" + timestamp + "\/\'"), '\n')
 	}
 })
 
@@ -40,12 +42,12 @@ fs.stat('prints', (error, stat) => {
 		async.forEachOf(urls, (value, key, cb ) => {
 			webshot(value, './prints/' + timestamp + '/' + key + '.jpeg', options, (err) => {
 		
-					if(err) console.log(err)
-					cb()
+					if(err) console.log(err);
+					cb();
 					bar.tick();
 			});
 		}, err => {
-			if(err) console.log(err)
+			if(err) console.log(err);
 		})
 	});
 })
