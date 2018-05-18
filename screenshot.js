@@ -5,7 +5,7 @@ var progress 	= require('progress');
 var urls 		= require('./pages.json');
 var chalk       = require('chalk');
 
-console.log('\n', chalk.green('STARTED!'), '\n')
+console.log(chalk.green(' STARTED!'), '\n')
 console.log(chalk.cyan(' Capturing screenshots...'))
 
 var pageWidth = 1366, pageHeight = 768,
@@ -51,5 +51,3 @@ fs.stat('prints', (error, stat) => {
 		})
 	});
 })
-
-
